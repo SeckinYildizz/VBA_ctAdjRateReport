@@ -17,7 +17,7 @@ Sub ctAdjRep()
     lRow3 = sns.Cells.Find("*", searchorder:=xlByRows, searchdirection:=xlPrevious).Row
     
     'Adjust dates in the visit maintenance sheet
-    For i2 = lRow2 To 4 Step -1
+    For i2 = lRow2 To 2 Step -1
         vms.Cells(i2, "C").NumberFormat = "@"
         vms.Cells(i2, "C").Value = Left(vms.Cells(i2, "C").Value, 10)
     Next i2
@@ -34,7 +34,7 @@ Sub ctAdjRep()
             i10 = InStr(4, .Cells(i1, "A").Value, "/")
             If i10 = 5 Then .Cells(i1, "A").Value = Left(.Cells(i1, "A").Value, 3) & "0" & Right(.Cells(i1, "A"), 6)
             
-            For i2 = lRow2 To 4 Step -1
+            For i2 = lRow2 To 2 Step -1
                 If .Cells(i1, "F").Value = vms.Cells(i2, "AI").Value And .Cells(i1, "A").Value = vms.Cells(i2, "C").Value Then
                     .Cells(i1, "G").Value = vms.Cells(i2, "L").Value
                 End If
@@ -49,7 +49,7 @@ Sub ctAdjRep()
                     
     With sns
         'Delete notes that require EVV
-        For i3 = lRow3 To 4 Step -1
+        For i3 = lRow3 To 2 Step -1
             If InStr(.Cells(i3, "L"), "NER") = 0 Or .Cells(i3, "G").Value <> " Approved" Then
                 .Rows(i3).EntireRow.Delete
             End If
@@ -57,7 +57,7 @@ Sub ctAdjRep()
         lRow3 = .Cells.Find("*", searchorder:=xlByRows, searchdirection:=xlPrevious).Row
         
         'Paste DSP names into the target sheet
-        .Range("C4:C" & lRow3).AdvancedFilter Action:=xlFilterCopy, CopyToRange:=ts.Range("A" & lRow4 + 1), Unique:=True
+        .Range("C2:C" & lRow3).AdvancedFilter Action:=xlFilterCopy, CopyToRange:=ts.Range("A" & lRow4 + 1), Unique:=True
     End With
     
     With ts
@@ -91,7 +91,7 @@ Sub ctAdjRep()
                 End If
             Next i1
             'Count the DSP names in the not EVV required services
-            For i3 = 4 To lRow3
+            For i3 = 2 To lRow3
                 If .Cells(i4, "A").Value = sns.Cells(i3, "C").Value Then
                     .Cells(i4, "B").Value = .Cells(i4, "B").Value + 1
                 End If
